@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mock="http://www.mulesoft.org/schema/mule/mock"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:getcustomerdetails.xml"/>
+         <spring:import resource="classpath:errorhandling.xml"/>
+        <spring:import resource="classpath:globalconfigurations.xml"/>
+    </spring:beans>
+    <munit:test name="getcustomerdetails-test-suite-get:/CustomerDetails:CustomerDetails-configTest" description="Test">
+	<mock:when messageProcessor="mongo:find-objects" doc:name="Mock MongoDB">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="Fetch MongoDB Record"/>
+            </mock:with-attributes>
+            <mock:then-return payload="{ &quot;_id&quot; : ObjectId(&quot;58fd9a955ed83a36b7b0c142&quot;), &quot;customerName&quot; : &quot;Mulesoft Inc&quot;, &quot;email&quot; : &quot;contactus@mulesoft.com&quot;, &quot;mobile&quot; : &quot;+447438992726&quot;, &quot;address&quot; : &quot;Flat 31,48 East Street&quot;, &quot;industry&quot; : &quot;IT Applications&quot;, &quot;createdTimeStamp&quot; : &quot;2017-04-24T07:26:27.521+01:00&quot; }" mimeType="application/json"/>
+	        </mock:when>    
+        <flow-ref name="get:/CustomerDetails:CustomerDetails-config" doc:name="Flow-ref to get:/CustomerDetails:CustomerDetails-config"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="Munit for getcustomerdetails has failed" expectedValue="{ &quot;_id&quot; : ObjectId(&quot;58fd9a955ed83a36b7b0c142&quot;), &quot;customerName&quot; : &quot;Mulesoft Inc&quot;, &quot;email&quot; : &quot;contactus@mulesoft.com&quot;, &quot;mobile&quot; : &quot;+447438992726&quot;, &quot;address&quot; : &quot;Flat 31,48 East Street&quot;, &quot;industry&quot; : &quot;IT Applications&quot;, &quot;createdTimeStamp&quot; : &quot;2017-04-24T07:26:27.521+01:00&quot; }" actualValue="#[payload]" doc:name="Assert Equals"/>
+    </munit:test>
+</mule>

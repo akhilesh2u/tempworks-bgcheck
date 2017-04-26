@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="GmailNotification">
+		<custom-transformer
+			class="com.mulesoft.exercise.InsertCustomerDetailsTransformer"
+			doc:name="Prepare the Gmail Message" />
+        <logger message="Gmail Notification Message: #[payload]" level="DEBUG" doc:name="Logger"/>
+		<smtp:outbound-endpoint host="${smtp.host}"
+			port="${smtp.port}" user="${smtp.user}" password="${smtp.password}"
+			connector-ref="Gmail" to="${smtp.toMail}" from="${smtp.fromMail}"
+			subject="${smtp.Subject}" responseTimeout="10000" doc:name="SMTP" />
+	</sub-flow>
+</mule>

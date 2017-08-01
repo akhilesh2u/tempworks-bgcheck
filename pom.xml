@@ -247,6 +247,13 @@
     
     
     
+    <dependency>
+            <groupId>org.verocity</groupId>
+            <artifactId>verocity-domain</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+            <type>zip</type>
+        </dependency>
     </dependencies>
 
 	<repositories>

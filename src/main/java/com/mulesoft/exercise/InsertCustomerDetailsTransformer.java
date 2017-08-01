@@ -7,7 +7,7 @@ import org.mule.transformer.AbstractMessageTransformer;
 import org.springframework.util.MimeTypeUtils;
 
 /*
- * This class transforms the input message format to the CustomerDetails collection format
+ * This class transforms the input message format to the tempworks-bgcheck collection format
  * */
 
 public class InsertCustomerDetailsTransformer extends AbstractMessageTransformer {

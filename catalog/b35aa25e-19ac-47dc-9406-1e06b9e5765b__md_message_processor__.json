@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "InboundTempworksXML"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "InboundVerocityJson"
+        }
+    },
+    "id": "b35aa25e-19ac-47dc-9406-1e06b9e5765b",
+    "version": "5.2.0.0"
+}

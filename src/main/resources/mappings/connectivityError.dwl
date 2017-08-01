@@ -1,8 +1,9 @@
 %dw 1.0
-%output application/json
+%output application/xml
 ---
 {
-	errorCategory: " Mongo DB/Gmail Connectivity Error",
-	errorMessage: flowVars.exceptionMessage,
-	httpUrl: 'http://' ++ flowVars.httpRequest
+	OrderResponse: {
+		errorCategory: 'Middleware Connectivity Error',
+		errorMessage: flowVars.exceptionMessage
+	}
 }

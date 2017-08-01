@@ -1,8 +1,9 @@
 %dw 1.0
-%output application/json
+%output application/xml
 ---
 {
-	errorCategory: "Middleware Dataweave Error",
-	errorMessage: flowVars.exceptionMessage,
-	httpUrl: 'http://' ++ flowVars.httpRequest
+	OrderResponse: {
+		errorCategory: 'Middleware Dataweave Error',
+		errorMessage: flowVars.exceptionMessage
+	}
 }

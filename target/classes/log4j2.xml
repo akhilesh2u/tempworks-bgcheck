@@ -10,12 +10,15 @@
 
 
     <Appenders>
-        <RollingFile name="file" fileName="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}customer-details.log" 
-                 filePattern="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}customer-details-%i.log">
+        <RollingFile name="file" fileName="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}tempworks-bgcheck.log" 
+                 filePattern="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}tempworks-bgcheck-%i.log">
             <PatternLayout pattern="%d [%t] %-5p %c - %m%n" />
             <SizeBasedTriggeringPolicy size="10 MB" />
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+        <Console name="STDOUT" target ="SYSTEM_OUT">
+        	<PatternLayout pattern="%d %-5p [%c] [%thread] CloudhubOrg = ${env.logging.cf.org} CloudhubSpace=${env:logging.cf.space} AppName=${env:logging.app} Version=${env:logging.version} %m%n "/>
+        </Console>
     </Appenders>
     <Loggers>
     	
@@ -30,21 +33,33 @@
         <AsyncLogger name="org.apache.cxf" level="WARN"/>
 
         <!-- Apache Commons tend to make a lot of noise which can clutter the log-->
-        <AsyncLogger name="org.apache" level="WARN"/>
+        <AsyncLogger name="org.apache" level="ERROR"/>
 
         <!-- Reduce startup noise -->
         <AsyncLogger name="org.springframework.beans.factory" level="WARN"/>
 
         <!-- Mule classes -->
-        <AsyncLogger name="org.mule" level="INFO"/>
-        <AsyncLogger name="com.mulesoft" level="INFO"/>
+        <AsyncLogger name="org.mule" level="WARN"/>
+        <AsyncLogger name="com.mulesoft" level="WARN"/>
 
         <!-- Reduce DM verbosity -->
         <AsyncLogger name="org.jetel" level="WARN"/>
         <AsyncLogger name="Tracking" level="WARN"/>
         
-        <AsyncRoot level="INFO">
+        <!-- Retain API flow INFO and WARN statements for metrics and alerting, even when root level set to ERROR -->
+        <AsyncLogger name="com.deverus.tempbgchk.info" level="INFO"/>
+        <AsyncLogger name="com.deverus.tempbgchk.warn" level="WARN"/>
+        
+        <!-- Enable DEBUG logs be enabled through Cloudhub Environment Variables if required for Operational triage -->
+        <AsyncLogger name="com.deverus.tempbgchk.debug.request.httpin"  level="${env:logging.debug.request.httpin.level}"/>
+        <AsyncLogger name="com.deverus.tempbgchk.debug.request.reqflow"  level="DEBUG"/>
+        <AsyncLogger name="com.deverus.tempbgchk.debug.response.resflow"  level="${env:logging.debug.response.resflow.level}"/>
+        <AsyncLogger name="com.deverus.tempbgchk.debug.response.apikit"  level="${env:logging.debug.response.apikit.level}"/>
+        <AsyncLogger name="com.deverus.tempbgchk.debug.response.exception"  level="${env:logging.debug.response.exception.level}"/>
+        
+        <AsyncRoot level="${env:logging.level}">
             <AppenderRef ref="file" />
+            <AppenderRef ref="STDOUT" />
         </AsyncRoot>
     </Loggers>
 </Configuration>

@@ -19,16 +19,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 	
 	<!-- <http:request-config name="invoke_resetContentType_API" host="0.0.0.0" port="8082" doc:name="HTTP Request Configuration"/> -->
-	<http:listener-config name="tempworks-bgcheck-httpListenerConfig" host="0.0.0.0" port="8082" doc:name="HTTP Listener Configuration" protocol="HTTPS">
+	<http:listener-config name="tempworks-bgcheck-httpListenerConfig" host="${host}" port="${port}" doc:name="HTTP Listener Configuration" protocol="HTTPS">
         <tls:context>
             <tls:key-store path="${jks.path}" keyPassword="${jks.trust.key.password}" password="${jks.trust.store.password}"/>
         </tls:context>
 	</http:listener-config>
 	<http:request-config name="invoke_verocity_API" host="${verosity.api.host}" port="${verosity.api.port}" doc:name="HTTP Request Configuration" protocol="HTTP">
-<!--         <tls:context>
-            <tls:trust-store path="${verosity.jks.path}" password="${jks.trust.store.password}" type="${jks.trust.key.password}"/>
-            <tls:key-store   />
-        </tls:context> -->
+
     </http:request-config>
 	<apikit:config name="tempworks-bgcheck-config" raml="tempworks-bgcheck.raml"
 		consoleEnabled="true" consolePath="console"  doc:name="Router" />

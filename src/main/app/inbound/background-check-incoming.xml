@@ -72,9 +72,11 @@ flowVars.requestorJson]]></dw:set-variable>
         <http:request config-ref="invoke_verocity_API" path="${verosity.api.path}" method="POST" doc:name="Invoke Verocity BackgroundCheck API">
             <http:request-builder>
                 <http:header headerName="Content-Type" value="application/json"/>
-                <http:header headerName="Authorization" value="#[message.inboundProperties['authorization']]"/>
+<!--                 <http:header headerName="Authorization" value="#[message.inboundProperties['authorization']]"/>
                  <http:header headerName="apiSecretKey" value="#[flowVars.requestorHeaderJson.apiSecretKey]"/>
-            </http:request-builder>
+ -->
+ 			<http:header headerName="Authorization" value="Bearer #[flowVars.requestorHeaderJson.apiSecretKey]"/>
+             </http:request-builder>
         </http:request>
         <json:json-to-xml-transformer mimeType="application/xml" doc:name="JSON to XML"/>
         

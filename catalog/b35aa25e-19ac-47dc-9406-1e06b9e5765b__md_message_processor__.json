@@ -2,13 +2,13 @@
     "inputMessageMetadata": {
         "messagePayload": {
             "connectorName": "#_custom_mule_metadata_type_#",
-            "typeId": "InboundTempworksXML"
+            "typeId": "OutboundRequest"
         }
     },
     "outputMessageMetadata": {
         "messagePayload": {
             "connectorName": "#_custom_mule_metadata_type_#",
-            "typeId": "InboundVerocityJson"
+            "typeId": "OutboundResponse"
         }
     },
     "id": "b35aa25e-19ac-47dc-9406-1e06b9e5765b",
